@@ -25,6 +25,8 @@ import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.ToXMLContentHandler;
+
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.xml.sax.ContentHandler;
@@ -37,13 +39,14 @@ public class ResumeController {
 	public static File parseToHTMLUsingApacheTikka(String file)
 			throws IOException, SAXException, TikaException {
 		// determine extension
+		
 		String ext = FilenameUtils.getExtension(file);
-		String outputFileFormat = "";
+		String outputFileFormat = ".html";
 		// ContentHandler handler;
 		
-		
+		System.out.println("hello");
 			
-		if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("pdf")
+	/*	if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("pdf")
 				| ext.equalsIgnoreCase("doc") | ext.equalsIgnoreCase("docx")) {
 			outputFileFormat = ".html";
 			// handler = new ToXMLContentHandler();
@@ -52,7 +55,7 @@ public class ResumeController {
 		} else {
 			System.out.println("Input format of the file " + file + " is not supported.");
 			return null;
-		}
+		}*/
 		String OUTPUT_FILE_NAME = FilenameUtils.removeExtension(file)
 				+ outputFileFormat;
 		ContentHandler handler = new ToXMLContentHandler();
@@ -63,6 +66,7 @@ public class ResumeController {
 		AutoDetectParser parser = new AutoDetectParser();
 		Metadata metadata = new Metadata();
 		try {
+			System.out.println("hai222");
 			parser.parse(stream, handler, metadata);
 			FileWriter htmlFileWriter = new FileWriter(OUTPUT_FILE_NAME);
 			htmlFileWriter.write(handler.toString());
@@ -70,7 +74,11 @@ public class ResumeController {
 			htmlFileWriter.close();
 			return new File(OUTPUT_FILE_NAME);
 		} finally {
+			System.out.println("hai222");
+
 			stream.close();
+			System.out.println(OUTPUT_FILE_NAME);
+
 		}
 	}
 	public static JSONObject loadGateAndAnnie(File file) throws GateException,
@@ -129,7 +137,7 @@ public class ResumeController {
 					if (s != null && s.length() > 0) {
 						nameJson.put(feature, s);
 					}
-				}
+				} 
 				profileJSON.put("name", nameJson);
 			} 
 			curAnnSet = defaultAnnotSet.get("TitleFinder");
@@ -240,7 +248,8 @@ public class ResumeController {
 	}
 
 public JSONObject transducer(String inputFileName) throws GateException, IOException, SAXException, TikaException {
-		Configuration conf = Play.application().configuration();
+		System.out.println();
+	    Configuration conf = Play.application().configuration();
 		System.setProperty("gate.home", "C:\\Program Files\\GATE_Developer_8.2");
 		conf.getString("gate.home");
 		//String inputFileName = file.getName();
@@ -252,8 +261,9 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 		String outputFileName = "E:\\resume.json";
 		System.out.println("I'm outside try");
 		JSONObject returnJSON = new JSONObject();
-		//System.out.println("outputFileName in extension "+ outputFileName);
-		try {
+		 
+		System.out.println("I'm outside  try");
+				
 			File tikkaConvertedFile = parseToHTMLUsingApacheTikka(inputFileName);
 			System.out.println("I'm inside try");
 			if (tikkaConvertedFile != null) {
@@ -261,20 +271,22 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 				JSONObject parsedJSON = loadGateAndAnnie(tikkaConvertedFile);
 				System.out.println("I crossed parsedJson");
 				JSONObject resultJSON = resultJSON(parsedJSON);
-				returnJSON = resultJSON;
+			//	returnJSON = resultJSON;
 				System.out.println("I crossed resultJson");
 				Out.prln("Writing to output...");
 				FileWriter jsonFileWriter = new FileWriter(outputFileName);
 				jsonFileWriter.write(resultJSON.toJSONString());
+				returnJSON = resultJSON;
 				jsonFileWriter.flush();
 				jsonFileWriter.close();
+				
 				Out.prln("Output written to file " +outputFileName);
 			}
-		} catch (Exception e) {
+		//} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Sad Face :( .Something went wrong.");
-			e.printStackTrace();
-		}
+			//System.out.println("Sad Face :( .Something went wrong.");
+			//e.printStackTrace();
+		//}
 		return returnJSON;	
 	}
 	public JSONObject resultJSON(JSONObject obj)
@@ -421,14 +433,18 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 }
 	public JSONArray skillsJSON(JSONObject obj)
 {
-	JSONArray  arr = new JSONArray();
+	JSONArray  skillsArr = new JSONArray();
 	if(obj.containsKey("basics"))
 	{
 		  if(obj.containsKey("skills"))
 		  {
+			  JSONArray  arr = new JSONArray();
+			 
 			  arr = (JSONArray)obj.get("skills");
+			  if(arr!=null)
+				  skillsArr=arr;
 		  }
 	}
-	return arr;
+	return skillsArr;
 }
 }

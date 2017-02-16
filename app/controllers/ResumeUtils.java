@@ -12,29 +12,33 @@ import java.io.OutputStream;
 import java.util.Calendar;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.pdfbox.PDFReader;
 import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.sax.ToXMLContentHandler;
 import org.json.simple.JSONObject;
-import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import java.util.List;
 
+import com.itextpdf.text.pdf.PdfReader;
+//import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.itextpdf.text.pdf.parser.*;
+/*import org.pdfbox.cos.COSDocument;
+import org.pdfbox.pdfparser.PDFParser;
+import org.pdfbox.pdmodel.PDDocument;
+import org.pdfbox.pdmodel.PDDocumentInformation;
+import org.pdfbox.util.PDFTextStripper;
+*/
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 public class ResumeUtils extends  Controller   
-{
-	
-	public static Result resumes() throws GateException, IOException, SAXException, TikaException
-	{
-		
+{public static Result resumes() throws GateException, IOException, SAXException, TikaException
+	{   
+	    
 		ResumeController rc = new ResumeController();
 		  System.out.println("Hey there....!!!");
 		  MultipartFormData  body = request().body().asMultipartFormData();
@@ -42,62 +46,92 @@ public class ResumeUtils extends  Controller
 	      File file = resume.getFile();
 	      Calendar calendar = Calendar.getInstance();		  
 		  String fileName = resume.getFilename();
-	      String extension = FilenameUtils.getExtension(fileName);
-		  System.out.println("Extension "+extension);
-		      fileName  =  FilenameUtils.removeExtension(fileName);
-		      System.out.println("FileNAme "+fileName);
-				
-		    
-		      
-		        
-			  fileName = "resume_" + calendar.getTimeInMillis() +"."+extension;
-			  System.out.println(fileName);		    
-				//File destination = new File("C:\\play\\Rest\\ResumeS\\"+fileName);
-			  File destination = new File(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
-			  InputStream inStream = null;
-			  OutputStream outStream = null;
-		    	try
-		    	{
-		    	    inStream = new FileInputStream(file);
-		    	    outStream = new FileOutputStream(destination);
-		    	    byte[] buffer = new byte[1024];
-		    	    int length;
-		    	    //copy the file content in bytes
+		  String ext = FilenameUtils.getExtension(fileName);
+		  
+	      fileName  =  FilenameUtils.removeExtension(fileName);
+		  System.out.println("FileNAme "+fileName);
+		  String a=fileName;
+		  fileName = "resume_" + calendar.getTimeInMillis() +"."+ext;
+		  System.out.println(fileName);		    	
+		  File destination = new File(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
+		  InputStream inStream = null;
+		  OutputStream outStream = null;
+		  inStream = new FileInputStream(file);
+		  outStream = new FileOutputStream(destination);
+		  byte[] buffer = new byte[1024];
+		  int length;
 		    	    while ((length = inStream.read(buffer)) > 0)
 		    	    {
 		    	    	outStream.write(buffer, 0, length);
 		    	    }
 		    	    inStream.close();
-		    	    outStream.close();	    	    
-		    	 }
-		    	catch(IOException e)
-		    	{
-		    	    e.printStackTrace();
-		    	}   
-			  
-		     JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
+		    	    outStream.close();
+		    	    if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("txt")
+							| ext.equalsIgnoreCase("doc"))
+					 
+			      //String extension = FilenameUtils.getExtension(fileName);
+				  {	   		    	 
+	
+		    JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
 		   return ok(Json.toJson(s));
-		
-	    	
 		  }
-	
+		   else if (ext.equalsIgnoreCase("pdf")) 
+			 
+		  {
+			    	   		    	 
+			    	System.out.println("hai");
+				 		   //create file writer
+				 		   //FileWriter fw=new FileWriter(new File(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName));
+				 		   //create buffered writer
+				 	  FileWriter fwv=new FileWriter(System.getProperty("user.dir")+ "\\pdf\\" + fileName);
+				 		   BufferedWriter bw=new BufferedWriter(fwv);
+				 		   //create pdf reader
+				 		  // PdfReader pr=new PdfReader(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
+				 		  PdfReader pr=new PdfReader(System.getProperty("user.dir")+ "\\pdf\\" + a);
+				 		   //get the number of pages in the document
+				 		   int pNum=pr.getNumberOfPages();
+				 		   //extract text from each page and write it to the output text file
+				 		   for(int page=1;page<=pNum;page++){
+				 		    String text=PdfTextExtractor.getTextFromPage(pr, page);
+				 		    bw.write(text);
+				 		    bw.newLine();
+				 		  
+				 		    System.out.println();
+				 		   }
+				 		   bw.flush();
+				 		   bw.close();
+
+					  JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\pdf\\" + fileName);	
+		
+//			    JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
+			   return ok(Json.toJson(s));
+		  }
+		  
+		   else if (ext.equalsIgnoreCase("docx"))  
+		   {
+			   XWPFDocument docx = new XWPFDocument(new  FileInputStream(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName ));
+		        List<XWPFParagraph> paragraphList =  docx.getParagraphs();
+
+		        XWPFDocument document= new XWPFDocument(); 
+		        FileOutputStream out = new FileOutputStream(new File(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName ));
+		        XWPFParagraph n = document.createParagraph();
+		        XWPFRun run=n.createRun();
+
+		        for (XWPFParagraph paragraph: paragraphList)
+		        { 
+		            run.setText(paragraph.getText());              
+		            run.addCarriageReturn();
+		        }
+		        document.write(out); 
+		        document.close();   
+		        out.close();
+		        //JSONObject s = rc.transducer("E:\\kanchana.txt");
+		       JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
+		        return ok(Json.toJson(s)); 
+		   }
+		   else  {
+				System.out.println("Input format of the file " + file + " is not supported.");
+		   		return null;
+		   }
 }
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+}
