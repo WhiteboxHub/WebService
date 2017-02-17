@@ -38,7 +38,7 @@ import play.Play;
 public class ResumeController {
 	public static File parseToHTMLUsingApacheTikka(String file)
 			throws IOException, SAXException, TikaException {
-		// determine extension
+		
 		
 		String ext = FilenameUtils.getExtension(file);
 		String outputFileFormat = ".html";

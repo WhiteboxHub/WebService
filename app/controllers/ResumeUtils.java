@@ -69,7 +69,7 @@ public class ResumeUtils extends  Controller
 		    	    if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("txt")
 							| ext.equalsIgnoreCase("doc"))
 					 
-			      //String extension = FilenameUtils.getExtension(fileName);
+			      //String extensio = FilenameUtils.getExtension(fileName);
 				  {	   		    	 
 	
 		    JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
