@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title /></head><body><p>play.mvc
+Class BodyParser.Json
+
+java.lang.Object
+play.mvc.BodyParser.MaxLengthBodyParser&lt;A&gt;
+play.mvc.BodyParser.BufferingBodyParser&lt;com.fasterxml.jackson.databind.JsonNode&gt;
+play.mvc.BodyParser.TolerantJson
+play.mvc.BodyParser.Json
+All Implemented Interfaces:
+BodyParser&lt;com.fasterxml.jackson.databind.JsonNode&gt;
+Enclosing interface:
+BodyParser&lt;A&gt;
+
+public static class BodyParser.Json
+extends BodyParser.TolerantJson
+Parse the body as Json if the Content-Type is text/json or application/json.
+Nested Class Summary
+
+Nested classes/interfaces inherited from interface play.mvc.BodyParser
+BodyParser.AnyContent, BodyParser.BufferingBodyParser&lt;A&gt;, BodyParser.Bytes, BodyParser.Default, BodyParser.DelegatingBodyParser&lt;A,B&gt;, BodyParser.DelegatingMultipartFormDataBodyParser&lt;A&gt;, BodyParser.Empty, BodyParser.FormUrlEncoded, BodyParser.Json, BodyParser.MaxLengthBodyParser&lt;A&gt;, BodyParser.MultipartFormData, BodyParser.Of, BodyParser.Raw, BodyParser.Text, BodyParser.TolerantJson, BodyParser.TolerantText, BodyParser.TolerantXml, BodyParser.Xml
+Constructor Summary
+
+Constructors
+Constructor and Description
+Json(play.api.http.HttpConfiguration httpConfiguration, HttpErrorHandler errorHandler) 
+Json(long maxLength, HttpErrorHandler errorHandler) 
+Method Summary
+
+All MethodsInstance MethodsConcrete Methods
+Modifier and Type	Method and Description
+Accumulator&lt;akka.util.ByteString,F.Either&lt;Result,com.fasterxml.jackson.databind.JsonNode&gt;&gt;	apply(Http.RequestHeader request)
+Return an accumulator to parse the body of the given HTTP request.
+Methods inherited from class play.mvc.BodyParser.TolerantJson
+parse
+Methods inherited from class play.mvc.BodyParser.BufferingBodyParser
+apply1
+Methods inherited from class java.lang.Object
+clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait
+Constructor Detail
+
+Json
+public Json(long maxLength,
+            HttpErrorHandler errorHandler)
+Json
+@Inject
+public Json(play.api.http.HttpConfiguration httpConfiguration,
+                    HttpErrorHandler errorHandler)
+Method Detail
+
+apply
+public Accumulator&lt;akka.util.ByteString,F.Either&lt;Result,com.fasterxml.jackson.databind.JsonNode&gt;&gt; apply(Http.RequestHeader request)
+Description copied from interface: BodyParser
+Return an accumulator to parse the body of the given HTTP request. The accumulator should either produce a result if an error was encountered, or the parsed body.
+Specified by:
+apply in interface BodyParser&lt;com.fasterxml.jackson.databind.JsonNode&gt;
+Overrides:
+apply in class BodyParser.MaxLengthBodyParser&lt;com.fasterxml.jackson.databind.JsonNode&gt;
+Parameters:
+request - The request to create the body parser for.
+Returns:
+The accumulator to parse the body.</p>
+</body></html>

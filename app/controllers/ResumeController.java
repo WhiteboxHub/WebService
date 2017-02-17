@@ -53,7 +53,7 @@ public class ResumeController {
 		} else if (ext.equalsIgnoreCase("txt") | ext.equalsIgnoreCase("rtf")) {
 			outputFileFormat = ".txt";
 		} else {
-			System.out.println("Input format of the file " + file + " is not supported.");
+			System.out.println("Input format of the file " + file + " is not supported.");//
 			return null;
 		}*/
 		String OUTPUT_FILE_NAME = FilenameUtils.removeExtension(file)
