@@ -42,7 +42,7 @@ public class ResumeController {
 		
 		String ext = FilenameUtils.getExtension(file);
 		String outputFileFormat = ".html";
-		// ContentHandler handler;
+		
 		
 		System.out.println("hello");
 			

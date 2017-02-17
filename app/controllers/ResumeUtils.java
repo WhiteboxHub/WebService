@@ -103,7 +103,7 @@ public class ResumeUtils extends  Controller
 
 					  JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\pdf\\" + fileName);	
 		
-//			    JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	//
+
 			   return ok(Json.toJson(s));
 		  }
 		  
