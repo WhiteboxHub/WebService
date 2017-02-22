@@ -36,37 +36,17 @@ import play.Configuration;
 import play.Play;
 
 public class ResumeController {
-	public static File parseToHTMLUsingApacheTikka(String file)
-			throws IOException, SAXException, TikaException {
+	public static File parseToHTMLUsingApacheTikka(String file)throws IOException, SAXException, TikaException {
 		
-		
-		String ext = FilenameUtils.getExtension(file);
+	   // String ext = FilenameUtils.getExtension(file);
 		String outputFileFormat = ".html";
 		
-		
-		System.out.println("hello");
-			
-	/*	if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("pdf")
-				| ext.equalsIgnoreCase("doc") | ext.equalsIgnoreCase("docx")) {
-			outputFileFormat = ".html";//
-			// handler = new ToXMLContentHandler();
-		} else if (ext.equalsIgnoreCase("txt") | ext.equalsIgnoreCase("rtf")) {
-			outputFileFormat = ".txt";
-		} else {
-			System.out.println("Input format of the file " + file + " is not supported.");
-			return null;
-		}*/
-		String OUTPUT_FILE_NAME = FilenameUtils.removeExtension(file)
-				+ outputFileFormat;
+		String OUTPUT_FILE_NAME = FilenameUtils.removeExtension(file)+ outputFileFormat;
 		ContentHandler handler = new ToXMLContentHandler();
-		// ContentHandler handler = new BodyContentHandler();
-		// ContentHandler handler = new BodyContentHandler(
-		// new ToXMLContentHandler());
 		InputStream stream = new FileInputStream(file);
 		AutoDetectParser parser = new AutoDetectParser();
 		Metadata metadata = new Metadata();
 		try {
-			System.out.println("hai222");
 			parser.parse(stream, handler, metadata);
 			FileWriter htmlFileWriter = new FileWriter(OUTPUT_FILE_NAME);
 			htmlFileWriter.write(handler.toString());
@@ -74,7 +54,6 @@ public class ResumeController {
 			htmlFileWriter.close();
 			return new File(OUTPUT_FILE_NAME);
 		} finally {
-			System.out.println("hai222");
 
 			stream.close();
 			System.out.println(OUTPUT_FILE_NAME);
@@ -86,15 +65,10 @@ public class ResumeController {
 		Out.prln("Initialising basic system...");
 		Gate.init();
 		Out.prln("...basic system initialised");
-
-		// initialise ANNIE (this may take several minutes)
 		Annie annie = new Annie();
 		annie.initAnnie();
-
-		// create a GATE corpus and add a document for each command-line
-		// argument
-		Corpus corpus = Factory.newCorpus("Annie corpus");
-		String current = new File(".").getAbsolutePath();
+        Corpus corpus = Factory.newCorpus("Annie corpus");
+		//String current = new File(".").getAbsolutePath();
 		URL u = file.toURI().toURL();
 		System.out.println(u);
 		FeatureMap params = Factory.newFeatureMap();
@@ -102,55 +76,45 @@ public class ResumeController {
 		params.put("preserveOriginalContent", new Boolean(true));
 		params.put("collectRepositioningInfo", new Boolean(true));
 		Out.prln("Creating doc for " + u);
-		Document resume = (Document) Factory.createResource(
-				"gate.corpora.DocumentImpl", params);
+		Document resume = (Document) Factory.createResource("gate.corpora.DocumentImpl", params);
 		corpus.add(resume);
-
-		// tell the pipeline about the corpus and run it
-		annie.setCorpus(corpus);
+        annie.setCorpus(corpus);
 		annie.execute();
-
-		Iterator iter = corpus.iterator();
+         Iterator iter = corpus.iterator();
 		JSONObject parsedJSON = new JSONObject();
 		Out.prln("Started parsing...");
-		// while (iter.hasNext()) {
-		if (iter.hasNext()) { // should technically be while but I am just
-								// dealing with one document
-			JSONObject profileJSON = new JSONObject();
-			Document doc = (Document) iter.next();
-			AnnotationSet defaultAnnotSet = doc.getAnnotations();
-
-			AnnotationSet curAnnSet;
-			Iterator it;
-			Annotation currAnnot;
-
-			// Name
-			curAnnSet = defaultAnnotSet.get("NameFinder");
-			if (curAnnSet.iterator().hasNext()) 
-			{
+		
+		if (iter.hasNext()) 
+		   {
+			  JSONObject profileJSON = new JSONObject();
+			  Document doc = (Document) iter.next();
+			  AnnotationSet defaultAnnotSet = doc.getAnnotations();
+			  AnnotationSet curAnnSet;
+			  Iterator it;
+			  Annotation currAnnot;
+              curAnnSet = defaultAnnotSet.get("NameFinder");
+	    if (curAnnSet.iterator().hasNext()) 
+			  {
 				currAnnot = (Annotation) curAnnSet.iterator().next();
 				JSONObject nameJson = new JSONObject();
-				String[] nameFeatures = new String[] { "firstName",
-						"middleName", "surname" };
+				String[] nameFeatures = new String[] { "firstName","middleName", "surname" };
 				for (String feature : nameFeatures) {
-					String s = (String) currAnnot.getFeatures().get(feature);
-					if (s != null && s.length() > 0) {
+					 String s = (String) currAnnot.getFeatures().get(feature);
+					 if (s != null && s.length() > 0) {
 						nameJson.put(feature, s);
-					}
+					 }
 				} 
 				profileJSON.put("name", nameJson);
 			} 
 			curAnnSet = defaultAnnotSet.get("TitleFinder");
-			if (curAnnSet.iterator().hasNext()) { // only one title will be
-													// found.
+			if (curAnnSet.iterator().hasNext()) { 
 				currAnnot = (Annotation) curAnnSet.iterator().next();
 				String title = stringFor(doc, currAnnot);
 				if (title != null && title.length() > 0) {
 					profileJSON.put("title", title);
 				}
-			}// title
+			}
 
-			// email,address,phone,url
 			String[] annSections = new String[] { "EmailFinder",
 					"AddressFinder", "PhoneFinder", "URLFinder" };
 			String[] annKeys = new String[] { "email", "address", "phone",
@@ -160,8 +124,7 @@ public class ResumeController {
 				curAnnSet = defaultAnnotSet.get(annSection);
 				it = curAnnSet.iterator();
 				JSONArray sectionArray = new JSONArray();
-				while (it.hasNext()) { // extract all values for each
-										// address,email,phone etc..
+				while (it.hasNext()) { 
 					currAnnot = (Annotation) it.next();
 					String s = stringFor(doc, currAnnot);
 					if (s != null && s.length() > 0) {
@@ -176,7 +139,6 @@ public class ResumeController {
 				parsedJSON.put("basics", profileJSON);
 			}
 
-			// awards,credibility,education_and_training,extracurricular,misc,skills,summary
 			String[] otherSections = new String[] { "summary",
 					"education_and_training", "skills", "accomplishments",
 					"awards", "credibility", "extracurricular", "misc" };
@@ -203,7 +165,7 @@ public class ResumeController {
 				}
 			}
 
-			// work_experience
+			
 			curAnnSet = defaultAnnotSet.get("work_experience");
 			it = curAnnSet.iterator();
 			JSONArray workExperiences = new JSONArray();
@@ -213,19 +175,15 @@ public class ResumeController {
 				String key = (String) currAnnot.getFeatures().get(
 						"sectionHeading");
 				if (key.equals("work_experience_marker")) {
-					// JSONObject details = new JSONObject();
 					String[] annotations = new String[] { "date_start","date_end", "jobtitle", "organization" };
 					for (String annotation : annotations) {
 						String v = (String) currAnnot.getFeatures().get(
 								annotation);
 						if (!StringUtils.isBlank(v)) {
-							// details.put(annotation, v);
 							workExperience.put(annotation, v);
 						}
 					}
-					// if (!details.isEmpty()) {
-					// workExperience.put("work_details", details);
-					// }
+					
 					key = "text";
 
 				}
@@ -242,7 +200,7 @@ public class ResumeController {
 				parsedJSON.put("work_experience", workExperiences);
 			}
 
-		}// if
+		}
 		Out.prln("Completed parsing...");
 		return parsedJSON;
 	}
@@ -252,27 +210,21 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 	    Configuration conf = Play.application().configuration();
 		System.setProperty("gate.home", "C:\\Program Files\\GATE_Developer_8.2");
 		conf.getString("gate.home");
-		//String inputFileName = file.getName();
-		//System.out.println(inputFileName);
-		//File destination = new File(System.getProperty("user.dir")+ "\\json\\" + inputFileName);
-		//String outputFileName ="resume.json"; 
-		
-		//String inputFileName = "E:\\resume.docx"; 
 		String outputFileName = "E:\\resume.json";
-		System.out.println("I'm outside try");
+		
 		JSONObject returnJSON = new JSONObject();
 		 
 		System.out.println("I'm outside  try");
 				
 			File tikkaConvertedFile = parseToHTMLUsingApacheTikka(inputFileName);
-			System.out.println("I'm inside try");
+			
 			if (tikkaConvertedFile != null) {
-				System.out.println("I'm inside if");
+				
 				JSONObject parsedJSON = loadGateAndAnnie(tikkaConvertedFile);
-				System.out.println("I crossed parsedJson");
+				
 				JSONObject resultJSON = resultJSON(parsedJSON);
-			//	returnJSON = resultJSON;
-				System.out.println("I crossed resultJson");
+			
+				
 				Out.prln("Writing to output...");
 				FileWriter jsonFileWriter = new FileWriter(outputFileName);
 				jsonFileWriter.write(resultJSON.toJSONString());
@@ -282,11 +234,7 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 				
 				Out.prln("Output written to file " +outputFileName);
 			}
-		//} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//System.out.println("Sad Face :( .Something went wrong.");
-			//e.printStackTrace();
-		//}
+		
 		return returnJSON;	
 	}
 	public JSONObject resultJSON(JSONObject obj)
@@ -308,7 +256,7 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 	  JSONObject basicJSON = new JSONObject();
 		  if(obj.containsKey("basics"))
 		  {
-		  			 //Out.prln(obj.get(key));
+		  			 
 			  JSONObject subObj =(JSONObject)obj.get("basics");
 			  String[] basics = {"name","title","email","phone","url"};
 			  String[] summary = {"summary"};
@@ -331,7 +279,7 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 						  {
 							  String name = (String) nameObj.get(key);
 							  s=s+name+" ";
-								//Out.prln(s);
+								
 						  }
 						}
 						  basicJSON.put(key1,s);
@@ -342,7 +290,7 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 				  }
 			  	}
 		  	}
-		  //JSONArray summaryJSON = new JSONArray();
+		 
 		  if(obj.containsKey("summary"))
 		  {
 			  JSONArray arr = (JSONArray)obj.get("summary");
@@ -358,10 +306,10 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 						  basicJSON.put("summary",json.get(key));
 					  }
 				  }
-				  //basicJSON.put("summary",sum);  
+				    
 			  }
-			  //basicJSON.put("summary",summaryJSON);
-		  }	  //basicsJSON.put("basics", basicJSON);
+			  
+		  }	  
 	  return basicJSON;
 	}
 	public JSONArray workJSON(JSONObject obj)
@@ -400,12 +348,7 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 					  }
 				  }
 			  }
-		/*	  JSONArray resultJSON = new JSONArray();
-		for(int i=0;i<workJSON.size();i++)	  
-		{
-		if (!workJSON.get(i).equals(null))
-			resultJSON.add(workJSON.get(i));
-		}*/
+		
 		return workJSON;
 	}
 	public JSONArray interestsJSON(JSONObject obj)

@@ -22,35 +22,29 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import java.util.List;
 
 import com.itextpdf.text.pdf.PdfReader;
-//import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.itextpdf.text.pdf.parser.*;
-/*import org.pdfbox.cos.COSDocument;
-import org.pdfbox.pdfparser.PDFParser;
-import org.pdfbox.pdmodel.PDDocument;
-import org.pdfbox.pdmodel.PDDocumentInformation;
-import org.pdfbox.util.PDFTextStripper;
-*/
+
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 public class ResumeUtils extends  Controller   
-{public static Result resumes() throws GateException, IOException, SAXException, TikaException
+{
+	public static Result resumes() throws GateException, IOException, SAXException, TikaException
 	{   
 	    
 		ResumeController rc = new ResumeController();
-		  System.out.println("Hey there....!!!");
+		  
 		  MultipartFormData  body = request().body().asMultipartFormData();
 		  FilePart resume = body.getFile("resume");
 	      File file = resume.getFile();
 	      Calendar calendar = Calendar.getInstance();		  
 		  String fileName = resume.getFilename();
 		  String ext = FilenameUtils.getExtension(fileName);
-		  
 	      fileName  =  FilenameUtils.removeExtension(fileName);
 		  System.out.println("FileNAme "+fileName);
-		  String a=fileName;
+		  String originalFile=fileName;
 		  fileName = "resume_" + calendar.getTimeInMillis() +"."+ext;
 		  System.out.println(fileName);		    	
 		  File destination = new File(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
@@ -60,44 +54,38 @@ public class ResumeUtils extends  Controller
 		  outStream = new FileOutputStream(destination);
 		  byte[] buffer = new byte[1024];
 		  int length;
-		    	    while ((length = inStream.read(buffer)) > 0)
+		    while ((length = inStream.read(buffer)) > 0)
 		    	    {
 		    	    	outStream.write(buffer, 0, length);
 		    	    }
 		    	    inStream.close();
 		    	    outStream.close();
-		    	    if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("txt")
+		    if (ext.equalsIgnoreCase("html") | ext.equalsIgnoreCase("txt")
 							| ext.equalsIgnoreCase("doc"))
 					 
-			      //String extension = FilenameUtils.getExtension(fileName);
 				  {	   		    	 
 	
-		    JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
-		   return ok(Json.toJson(s));
-		  }
-		   else if (ext.equalsIgnoreCase("pdf")) 
+		             JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
+		              return ok(Json.toJson(s));
+		          }
+		    else if (ext.equalsIgnoreCase("pdf")) 
 			 
-		  {
+		          {
 			    	   		    	 
 			    	System.out.println("hai");
-				 		   //create file writer
-				 		   //FileWriter fw=new FileWriter(new File(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName));
-				 		   //create buffered writer
+				 		   
 				 	  FileWriter fwv=new FileWriter(System.getProperty("user.dir")+ "\\pdf\\" + fileName);
-				 		   BufferedWriter bw=new BufferedWriter(fwv);
-				 		   //create pdf reader
-				 		  // PdfReader pr=new PdfReader(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
-				 		  PdfReader pr=new PdfReader(System.getProperty("user.dir")+ "\\pdf\\" + a);
-				 		   //get the number of pages in the document
-				 		   int pNum=pr.getNumberOfPages();
-				 		   //extract text from each page and write it to the output text file
-				 		   for(int page=1;page<=pNum;page++){
+				 	  BufferedWriter bw=new BufferedWriter(fwv);
+				 	  PdfReader pr=new PdfReader(System.getProperty("user.dir")+ "\\pdf\\" + originalFile);
+				 	  int pNum=pr.getNumberOfPages();
+				 	  for(int page=1;page<=pNum;page++)
+				 	     {
 				 		    String text=PdfTextExtractor.getTextFromPage(pr, page);
 				 		    bw.write(text);
 				 		    bw.newLine();
 				 		  
 				 		    System.out.println();
-				 		   }
+				 		 }
 				 		   bw.flush();
 				 		   bw.close();
 
@@ -105,7 +93,7 @@ public class ResumeUtils extends  Controller
 		
 
 			   return ok(Json.toJson(s));
-		  }
+		                  }
 		  
 		   else if (ext.equalsIgnoreCase("docx"))  
 		   {
@@ -125,13 +113,12 @@ public class ResumeUtils extends  Controller
 		        document.write(out); 
 		        document.close();   
 		        out.close();
-		        //JSONObject s = rc.transducer("E:\\kanchana.txt");
-		       JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
+		        JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);
 		        return ok(Json.toJson(s)); 
-		   }
-		   else  {
+		                  }
+		    else  {
 				System.out.println("Input format of the file " + file + " is not supported.");
 		   		return null;
 		   }
-}
-}
+           }
+           }
