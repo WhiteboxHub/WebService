@@ -210,6 +210,7 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 	    Configuration conf = Play.application().configuration();
 		System.setProperty("gate.home", "C:\\Program Files\\GATE_Developer_8.2");
 		conf.getString("gate.home");
+
 		String outputFileName = "E:\\resume.json";
 		
 		JSONObject returnJSON = new JSONObject();
