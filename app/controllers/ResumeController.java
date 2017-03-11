@@ -39,9 +39,9 @@ public class ResumeController {
 	public static File parseToHTMLUsingApacheTikka(String file)throws IOException, SAXException, TikaException {
 		
 	   // String ext = FilenameUtils.getExtension(file);
-		String outputFileFormat = ".html";
+		//String outputFileFormat = ".html";
 		
-		String OUTPUT_FILE_NAME = FilenameUtils.removeExtension(file)+ outputFileFormat;
+		String OUTPUT_FILE_NAME = FilenameUtils.removeExtension(file);
 		ContentHandler handler = new ToXMLContentHandler();
 		InputStream stream = new FileInputStream(file);
 		AutoDetectParser parser = new AutoDetectParser();
@@ -56,33 +56,34 @@ public class ResumeController {
 		} finally {
 
 			stream.close();
-			System.out.println(OUTPUT_FILE_NAME);
+			
 
 		}
 	}
 	public static JSONObject loadGateAndAnnie(File file) throws GateException,
 			IOException, NullPointerException {
 		Out.prln("Initialising basic system...");
+		//System.setProperty("gate.home", "C:\\Program Files\\GATE_Developer_8.2");
 		Gate.init();
-		Out.prln("...basic system initialised");
+		//Out.prln("...basic system initialised");
 		Annie annie = new Annie();
 		annie.initAnnie();
         Corpus corpus = Factory.newCorpus("Annie corpus");
 		//String current = new File(".").getAbsolutePath();
 		URL u = file.toURI().toURL();
-		System.out.println(u);
+	
 		FeatureMap params = Factory.newFeatureMap();
 		params.put("sourceUrl", u);
 		params.put("preserveOriginalContent", new Boolean(true));
 		params.put("collectRepositioningInfo", new Boolean(true));
-		Out.prln("Creating doc for " + u);
+		//Out.prln("Creating doc for " + u);
 		Document resume = (Document) Factory.createResource("gate.corpora.DocumentImpl", params);
 		corpus.add(resume);
         annie.setCorpus(corpus);
 		annie.execute();
          Iterator iter = corpus.iterator();
 		JSONObject parsedJSON = new JSONObject();
-		Out.prln("Started parsing...");
+		//Out.prln("Started parsing...");
 		
 		if (iter.hasNext()) 
 		   {
@@ -201,21 +202,21 @@ public class ResumeController {
 			}
 
 		}
-		Out.prln("Completed parsing...");
+		//Out.prln("Completed parsing...");
 		return parsedJSON;
 	}
 
 public JSONObject transducer(String inputFileName) throws GateException, IOException, SAXException, TikaException {
-		System.out.println();
+		
 	    Configuration conf = Play.application().configuration();
 		System.setProperty("gate.home", "C:\\Program Files\\GATE_Developer_8.2");
 		conf.getString("gate.home");
 
-		String outputFileName = "E:\\resume.json";
-		
+		String outputFileName = "resume.json";
+		 File destination = new File(System.getProperty("user.dir")+ outputFileName);
 		JSONObject returnJSON = new JSONObject();
 		 
-		System.out.println("I'm outside  try");
+		
 				
 			File tikkaConvertedFile = parseToHTMLUsingApacheTikka(inputFileName);
 			
@@ -226,14 +227,14 @@ public JSONObject transducer(String inputFileName) throws GateException, IOExcep
 				JSONObject resultJSON = resultJSON(parsedJSON);
 			
 				
-				Out.prln("Writing to output...");
+				//Out.prln("Writing to output...");
 				FileWriter jsonFileWriter = new FileWriter(outputFileName);
 				jsonFileWriter.write(resultJSON.toJSONString());
 				returnJSON = resultJSON;
 				jsonFileWriter.flush();
 				jsonFileWriter.close();
 				
-				Out.prln("Output written to file " +outputFileName);
+				//Out.prln("Output written to file " +outputFileName);
 			}
 		
 		return returnJSON;	
