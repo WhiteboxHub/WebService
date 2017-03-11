@@ -1,0 +1,156 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="X-Parsed-By" content="org.apache.tika.parser.DefaultParser" />
+<meta name="X-Parsed-By" content="org.apache.tika.parser.microsoft.ooxml.OOXMLParser" />
+<meta name="creator" content="Apache POI" />
+<meta name="meta:author" content="Apache POI" />
+<meta name="meta:creation-date" content="2017-03-11T18:48:47Z" />
+<meta name="extended-properties:Application" content="Apache POI" />
+<meta name="Application-Name" content="Apache POI" />
+<meta name="dc:creator" content="Apache POI" />
+<meta name="Creation-Date" content="2017-03-11T18:48:47Z" />
+<meta name="Author" content="Apache POI" />
+<meta name="dcterms:created" content="2017-03-11T18:48:47Z" />
+<meta name="Content-Type" content="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+<title></title>
+</head>
+<body><p>ANUSHYA.K
+					
+SKILLS SUMMARY: 
+Over 6+ years of diversified experience as Quality Engineer with Web Applications, Web Services, API’s and Mobile Applications.
+Exclusively worked with agile scaling practices - Continous Integration and Continous Deployment. 
+Experience working in Agile – Scrum environment. 
+Extensively worked with UI, Mobile applications and RestAPI’s using Java, Selenium WebDriver, Apache HttpClient, Appium and TestNG.
+Proficient in development of automation framework using patterns like PageObject, Data Driven using Apache POI, UI Mapping and Java design patterns.
+Extensive experience working with selenium locators for dynamic UI elements with CSS Selectors, Xpath.
+Experience working with Selenium parallel testing and Selenium Grid distributed configurations. Good knowledge on configuring and understanding Desired Capabilities.
+Good Experience in automating API’S testing using HttpClient. Also used plugins like postman, Advanced REST Client etc.
+Experience automating native mobile apps using Appium mobile automation framework.
+Hands on experience working with android and IOS app locators using UIAutomatorViewer and Appium Inspector.
+Worked with ADB command line tool to interact with devices/simulators configured. Worked with android SDK tools like Logcat(under DDMS) to deal with app logs. 
+Experience working with agile ALM tools like Rally and also project management tools like Jira.
+Knowledge on application packaging containers like Docker and code review tools (Gerrit).   
+Worked on a POC to do UI automation using Nightwatch.Js which is End-to-End test framework in Node.js.
+Experience working with reporting, logging mechanisms and integration of git with Jenkins. 
+Strong experience with REST architecture and consuming API’s as dynamic data resources.
+Experience using Jmeter to scale the performance testing of REST API’S and Web Applications.
+Experience in build automation and continuous integration using Jenkins, Maven.
+Experience in creating Data Driven Test entities using Java, Apache POI and TestNG data providers.
+Extensively handled Functional, Integration, System, Regression, User Acceptance, and Load Testing. 
+Experience working with SQL scripts to work with Database testing for data integrity and data mapping.
+
+EDUCATION: Master’s in Computer Applications from Madras University in 2001.
+
+TECHNICAL SKILLS:
+
+
+
+PROFESIONAL EXPERIENCE:
+
+CISCO SYSTEMS, San Jose, CA.                                                              Sep 2014 - July 2016   
+QA Engineer
+
+Description:
+Cisco Systems is networking giant, Cisco develops networking products and provides service, It involves setting up Cisco legal entities in targeted high-growth countries. These entities allow the competitive sale of Cisco products, services, and solutions.
+Professional Service is new Cisco initiative which helps Cisco Service Engineer to keep track of travel expenses along with Total Trip Costs in Salesfoce. Professional Services is Bunch of Advance Services which Cisco Provide to their partners. Professional Services is great platform to Cisco Account Managers to sale group of advance services as part of Offer.	
+
+Responsibilities:
+
+Gathered and analyzed business requirements to create a high quality test scripts.
+Worked on automating test cases using Selenium WebDriver, TestNG and Java.   
+Setup the Automation framework using SeleniumWebDriver to run test cases and parallel testing with multiple browsers and platforms
+Experienced in Automating RestAPI’S using HttpClient Framework, Java and Jackson libraries.
+Created performance test scripts using JMeter to monitor performance of the browser apps and REST APIs.
+Worked with Continuous build and integration using maven and Jenkins.
+Worked on a POC to do UI automation using Nightwatch.Js which is End-to-End test framework in Node.js
+Using Git review, review the changes / updates by all the teammate contributed within different sprint. 
+Automation testing of IOS and Android native apps using Appium. Involved in development of mobile automation framework using Appium, Java and TestNG.
+Worked with mobile app locators using UI Automator Viewer and Appium Inspector. 
+Worked on TestNG parallel testing and Selenium grid configurations.
+Experience handling different reporting structures using TestNG listeners and Jenkins plugin configurations
+Worked on Automation Framework and test scripts development using Java, Hybrid Framework (PageObject, Data Driven, UI Mapping, Modular patterns), Selenium WebDriver, HttpClient, Appium ,TestNG, Apache POI. 
+Worked with dynamic elements using xpath and css selector locators, developed advanced automation scripts using Selenium WebDriver.
+Worked on Agile and Scrum Methodology. 
+Used and monitored Rally to log, track and close defects as and when developers provide fix.
+Report defects and discuss details with Project managers.
+
+Environment: Selenium WebDriver / Grid, TestNG, JMeter, Java, Rally, Maven, Appium, HTTPClient, SQL, Agile 
+
+Blue Cross and Blue Shield, Boston, MA	                                                 Sep 2012 - Apr 2014
+QA Engineer
+Description: The Company aims at creating unprecedented level of transparency in healthcare with two goals: enable consumers to make more informed healthcare decisions and collaborate with providers to improve quality outcomes and affordability. The project was to create an interactive web-based application within the Customer Relationship Management system to allow clients to research,  communicate with different healthcare service providers and tailor make their own healthcare tool.
+
+Responsibilities:
+
+Involved in writing test plans with high-level scenarios to ensure complete test coverage.
+Created and maintained test data in excel sheet.
+Written detailed test scripts using Selenium Element Locators, WebDriver Methods and JAVA programming features and TestNG Annotations. 
+Designed, developed and deployed an automation test framework based on open source technologies, such as WebDriver/RC, TestNG, SVN, Maven and Jenkins.
+Identified and documented the defects in JIRA.
+Integrated Appium for distributing tests on the cloud, IntegratedAppium with Continuous Integration tool- Jenkins.
+Execution of test scripts using Selenium WebDriver using TestNG/Junit framework. 
+Designed, executed and maintained Selenium WebDriver, TESTNG, automated test cases for regression test cases.
+ Reviewed the Selenium Scripts developed by the team members 
+Created and executed test-cases and scenarios on all the REST API using SoapUI and HttpClient.
+Performed Integration, System, and Regression testing to verify the functionality of the application.
+Extensively used Firebug, FirePath to identify the locators of Web elements.
+Extensively used TestNGXML suites to run smoke, regression, functional tests.
+Validated Web Services request and response XML using SOAPUI tool and created automation scripts in SOAP UI using Groovy Script.
+Experience with Assertions like Schema Compliance, SOAP, XPath assertions using SOAPUI.
+Performed data driven testing in SOAPUI using properties and property transfer steps.
+Analyzed, documented and maintained test results and test logs.
+Conducted backend testing using SQL results and comparing them with the reports of the application under test.
+Assisted team member in doing ad-hoc testing of the application under test every-time a new build was deployed.
+
+Environment: Selenium RC, Java, TestNG, Firebug, SOAPUI, XPath, Maven, Jenkins, Appium, JIRA, Windows, SQL.
+
+
+WEB METHODS (Active Software Inc.), Santa Clara, CA                      April 2011–May 2012
+QA Engineer
+
+Web Methods is an enterprise software company, acquired by Software AG, focused on application integration, business process integration and B2B partner integration.  The company pioneered the use of web services to connect software applications together within a single organization and across the Internet.
+
+Description:
+
+Developing and Maintaining Regression Center for QA: This project is to develop a Regression Center that can test their product using Java, Perl &amp; shell script for different operating systems. Generating Report on Regression using JDBC and posting results in web site. Involved in automation and maintenance of the Regression Center in English and Japanese versions.
+	
+Responsibilities: 
+
+Understanding the requirements and preparing Test Plan and Test cases for the application in Test Director.
+Responsible of writing code to do the unit testing in Java.
+Responsible for automation of Integration testing of individual test cases using Perl Scripting.
+Involved in automations of individual test scripts of Regression Center using Perl and UnixScripting.
+Responsible for report generation of Regression Center.
+Responsible for installing the different builds on different operating systems.
+Responsible for testing product on different databases.
+Performed manual testing on Regression Center.
+
+Environment: Test Director, Perl, Java, Shell Scripting, MS Office.
+
+
+Capital One Financial Corp., McLean, VA	                                     Aug 2009 - Feb 2011
+QA Analyst
+Description:
+
+Capital One provides financial products and services to individuals, small businesses, and commercial clients. In Capital One, I worked as a Quality Assurance engineer on Capital One-Chevy Chase Bank merger integration project. The project involved in combining the technology infrastructures of both banks so that customers of Chevy Chase Bank have access to all services which Capital One provides to its customer.
+
+Responsibilities:
+
+Performed black box testing and user acceptance testing.
+Performed manual testing and automated testing using Quick Test Pro.
+Added multiple checkpoints in testing of GUI by inserting checkpoints in Quick Test Pro scripts for single or multiple objects and text.
+Used Quick Test Pro for testing the compatibility of the application with different platforms. 
+Analyzed, designed, created, and executed data-driven automated performance and load test in a Windows environment.
+Performed backend testing with SQL for data validation and data Integrity.
+Used Microsoft SSIS for Extracting, Transforming and Loading (ETL) processes during data transfer in datawarehouse.
+Prepared Detailed Test cases in QC with Use-Case Design Under which system will be tested.
+Involved in generating Test Scripts using QuickTest Pro (QTP) for different transactions to execute
+Provided support for UAT testing as required for the application.
+Used Load Runner to check the source of performance delay, network or client delays, CPU performance, I/O delays, or issues with database server.
+Used Quality Center to house all test documentation and report/track all issues and defects.
+Worked on Load/Stress/Volume testing using Load Runner.
+Created load scripts (VuGen) using different protocols with data parameterization.
+
+Environment: UNIX, QTP, Quality Center, Load Runner, SQL, PL/SQL, HTML.
+</p>
+</body></html>
