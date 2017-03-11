@@ -421,6 +421,7 @@
 			<resource>
 				<directory>${project.basedir}/public</directory>
 				<targetPath>public</targetPath>
+				
 			</resource>
     </resources>
 	<sourceDirectory>${project.basedir}/app</sourceDirectory>
