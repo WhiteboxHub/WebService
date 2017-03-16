@@ -49,7 +49,7 @@ public class ResumeUtils extends  Controller
 		    	    }
 		    	    inStream.close();
 		    	    outStream.close();
-					JSONObject s = rc.abb(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
+					JSONObject s = rc.transducer(System.getProperty("user.dir")+ "\\ResumeS\\" + fileName);	
 		            return ok(Json.toJson(s));
            }
            }
