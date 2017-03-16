@@ -1,9 +1,6 @@
 package controllers;
 
-
-	
-
-	import static gate.Utils.stringFor;
+    import static gate.Utils.stringFor;
 	import gate.Annotation;
 	import gate.AnnotationSet;
 	import gate.Corpus;
@@ -14,8 +11,8 @@ package controllers;
 	import gate.event.DocumentListener;
 	import gate.util.GateException;
 	import gate.util.Out;
-import play.Configuration;
-import play.Play;
+    import play.Configuration;
+     import play.Play;
 
 //import sun.tools.jar.resources.jar;
 
